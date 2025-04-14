@@ -1,54 +1,108 @@
-# React + TypeScript + Vite
+# Grab N Download
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A powerful Chrome extension that allows you to download all images and tables from any webpage with just one click.
 
-Currently, two official plugins are available:
+![Grab N Download](./public//screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- 🖼️ **Bulk Image Download**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+  - Downloads all images from the current webpage
+  - Filters out small images and SVG icons
+  - Automatically compresses images into a ZIP file
+  - Preserves original image formats
+  - Names files systematically for easy organization
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- 📊 **Table Export**
+
+  - Extracts all HTML tables from the webpage
+  - Converts tables to Excel format (.xlsx)
+  - Maintains table structure and formatting
+  - Packages multiple tables into a single ZIP file
+  - Names files based on page title for easy reference
+
+- 🎯 **Smart Filtering**
+
+  - Ignores small icons and decorative images
+  - Focuses on meaningful content
+  - Minimum size threshold for images (50x50px)
+
+- 📱 **User-Friendly Interface**
+  - Clean, modern design
+  - Real-time download progress indicators
+  - Download summary statistics
+  - Error handling with clear user feedback
+  - Desktop notifications for completed downloads
+
+## Installation
+
+1. Download the extension from the Chrome Web Store (link coming soon)
+2. Click "Add to Chrome" to install
+3. The extension icon will appear in your browser toolbar
+
+## Usage
+
+1. Navigate to any webpage containing images or tables you want to download
+2. Click the Grab N Download icon in your Chrome toolbar
+3. Choose either:
+   - "Download All Images" to save images as a ZIP file
+   - "Download All Tables" to save tables as Excel files
+4. Your downloads will begin automatically
+5. Check your downloads folder for the saved files
+
+## Technical Details
+
+- Built with React and TypeScript
+- Uses modern Chrome Extension Manifest V3
+- Implements JSZip for file compression
+- Utilizes XLSX library for Excel file generation
+- Features background service worker for notifications
+
+## Privacy & Permissions
+
+The extension requires the following permissions:
+
+- `activeTab`: To access the current webpage
+- `storage`: For saving user preferences
+- `downloads`: To save files to your computer
+- `notifications`: For download completion alerts
+
+Note: This extension does not collect any user data or communicate with external servers.
+
+## Development
+
+To set up the development environment:
+
+```bash
+# Clone the repository
+git clone [repository-url]
+
+# Install dependencies
+npm install
+
+# Build the extension
+npm run build
+
+# Load the extension in Chrome:
+# 1. Open chrome://extensions/
+# 2. Enable "Developer mode"
+# 3. Click "Load unpacked"
+# 4. Select the `dist` folder
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Contributing
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## License
+
+MIT License - feel free to use this code in your own projects.
+
+## Support
+
+If you encounter any issues or have questions, please open an issue in the GitHub repository.
+
+---
+
+Made with ❤️ by [Your Name]
