@@ -1,7 +1,7 @@
 import { Download, ImageIcon, Table, Loader2 } from "lucide-react";
 import { useState } from "react";
 
-export default function App() {
+export default function Popup() {
   const [isDownloadingImages, setIsDownloadingImages] = useState(false);
   const [isDownloadingTables, setIsDownloadingTables] = useState(false);
   const [stats, setStats] = useState<{ images: number; tables: number } | null>(
