@@ -105,4 +105,4 @@ If you encounter any issues or have questions, please open an issue in the GitHu
 
 ---
 
-Made with ❤️ by [Your Name]
+Made with ❤️ by Sri Krishna Chaithanya Raj
