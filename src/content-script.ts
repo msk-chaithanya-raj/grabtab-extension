@@ -2,6 +2,16 @@
 import JSZip from "jszip";
 import * as XLSX from "xlsx";
 
+// helper function
+function stringToArrayBuffer(binaryString: string): ArrayBuffer {
+  const buffer = new ArrayBuffer(binaryString.length);
+  const view = new Uint8Array(buffer);
+  for (let i = 0; i < binaryString.length; i++) {
+    view[i] = binaryString.charCodeAt(i) & 0xff;
+  }
+  return buffer;
+}
+
 // Function to download all images from the page
 async function downloadAllImages() {
   try {
@@ -77,6 +87,7 @@ async function downloadAllTables() {
       return { success: false, count: 0 };
     }
 
+    const zip = new JSZip();
     let processedCount = 0;
 
     for (let i = 0; i < tables.length; i++) {
@@ -85,16 +96,45 @@ async function downloadAllTables() {
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, `Table ${i + 1}`);
 
-        const pageTitle = document.title
-          .replace(/[^a-z0-9]/gi, "_")
-          .substring(0, 30);
-        const filename = `${pageTitle}_table_${i + 1}.xlsx`;
-        XLSX.writeFile(workbook, filename);
+        // Convert workbook to a blob
+        const tableBinary = XLSX.write(workbook, {
+          bookType: "xlsx",
+          type: "binary",
+        });
+
+        // Convert binary string to ArrayBuffer
+        const arrayBuffer = stringToArrayBuffer(tableBinary);
+        const filename = `table_${i + 1}.xlsx`;
+
+        // Add the table to the zip
+        zip.file(filename, arrayBuffer);
         processedCount++;
       } catch (error) {
         console.error(`Error processing table ${i}:`, error);
       }
     }
+
+    if (processedCount === 0) {
+      return { success: false, count: 0 };
+    }
+
+    // Generate the zip file containing all the tables
+    const content = await zip.generateAsync({
+      type: "blob",
+      compression: "DEFLATE",
+      compressionOptions: { level: 9 },
+    });
+
+    // Create a downloadable link for the zip file
+    const url = URL.createObjectURL(content);
+    const link = document.createElement("a");
+    const pageTitle = document.title
+      .replace(/[^a-z0-9]/gi, "_")
+      .substring(0, 30);
+    link.href = url;
+    link.download = `${pageTitle}_tables.zip`;
+    link.click();
+    URL.revokeObjectURL(url);
 
     return { success: true, count: processedCount };
   } catch (error) {

@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   if (request.action === "notify") {
     chrome.notifications.create({
       type: "basic",
-      iconUrl: "icon-128.png",
+      iconUrl: "favicon.ico",
       title: request.title || "Grab N Download",
       message: request.message || "",
     });

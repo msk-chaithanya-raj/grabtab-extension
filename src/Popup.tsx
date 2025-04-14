@@ -38,6 +38,13 @@ export default function Popup() {
                   images: response.count,
                   tables: prev?.tables ?? 0,
                 }));
+
+                // Send notification to background script
+                chrome.runtime.sendMessage({
+                  action: "notify",
+                  title: "Images Downloaded",
+                  message: `${response.count} images downloaded successfully!`,
+                });
               }
               setIsDownloadingImages(false);
             }
@@ -79,6 +86,13 @@ export default function Popup() {
                   tables: response.count,
                   images: prev?.images ?? 0,
                 }));
+
+                // Send notification to background script
+                chrome.runtime.sendMessage({
+                  action: "notify",
+                  title: "Tables Downloaded",
+                  message: `${response.count} tables downloaded successfully!`,
+                });
               }
               setIsDownloadingTables(false);
             }
