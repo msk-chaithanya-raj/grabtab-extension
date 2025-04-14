@@ -1,23 +1,4 @@
-// Listen for installation
-chrome.runtime.onInstalled.addListener(() => {
-  console.log("Grab N Download extension installed");
-
-  // Initialize default settings
-  chrome.storage.sync.get("settings", (data) => {
-    if (!data.settings) {
-      chrome.storage.sync.set({
-        settings: {
-          imageQuality: 90,
-          imageFormat: "original",
-          includeImageAlt: true,
-          tableFormat: "xlsx",
-          downloadLocation: "downloads",
-        },
-      });
-    }
-  });
-});
-
+// src/background.ts
 // Listen for messages from content script or popup
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   if (request.action === "notify") {
